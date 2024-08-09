@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: my-cloudstorage
+  datasource:
+    url: jdbc:${DB_DRIVER}://${DB_HOST}:${DB_PORT}/${DB_DATABASE}
+    username: ${DB_USERNAME:user}
+    password: ${DB_PASSWORD:password}
+
+  data:
+    jdbc:
+      dialect: postgresql
+    redis:
+      host: ${REDIS_HOST}
+
+minio:
+  access: ${MINIO_ACCESS_KEY}
+  secret: ${MINIO_SECRET_KEY}
+  endpoint: ${MINIO_ENDPOINT}
+  bucket:
