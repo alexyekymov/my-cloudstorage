@@ -18,12 +18,12 @@ services:
     environment:
       - MINIO_ROOT_USER=${MINIO_ACCESS_KEY}
       - MINIO_ROOT_PASSWORD=${MINIO_SECRET_KEY}
-    command: server ~/minio --console-address :9090
+    command: server /data --console-address :9090
     ports:
       - '9090:9090'
       - '9000:9000'
     volumes:
-      - ${HOME}/minio-cloud:/~/minio
+      - ${HOME}/minio-cloud/data:/data
 
   redis:
     image: redis/redis-stack-server:7.2.0-v11

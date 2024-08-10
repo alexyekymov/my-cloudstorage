@@ -11,9 +11,13 @@ spring:
       dialect: postgresql
     redis:
       host: ${REDIS_HOST}
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 50MB
 
 minio:
   access: ${MINIO_ACCESS_KEY}
   secret: ${MINIO_SECRET_KEY}
   endpoint: ${MINIO_ENDPOINT}
-  bucket:
+  bucket: mycloudstorage
