@@ -1,9 +1,6 @@
 package dev.overlax.cloudstorage.mycloudstorage.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
@@ -23,6 +20,11 @@ public class User {
     private String email;
 
     private String name;
+
+    private String password;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @OneToMany(mappedBy = "owner")
     private List<File> files;

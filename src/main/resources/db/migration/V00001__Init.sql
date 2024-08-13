@@ -1,8 +1,10 @@
 create table if not exists users
 (
-    id    BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    email varchar(50) NOT NULL UNIQUE,
-    name  varchar(50) NOT NULL
+    id       BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    email    varchar(50) NOT NULL UNIQUE,
+    name     varchar(50) NOT NULL,
+    password varchar(50) NOT NULL,
+    role varchar(20) NOT NULL
 );
 
 create table if not exists file
@@ -15,6 +17,6 @@ create table if not exists file
 );
 
 
-insert into users(email, name)
-values ('admin@mail.com', 'admin'),
-       ('user@mail.com', 'user');
+insert into users(email, name, password, role)
+values ('admin@mail.com', 'admin', '{noop}admin', 'ROLE_ADMIN'),
+       ('user@mail.com', 'user', '{noop}user', 'ROLE_USER');
