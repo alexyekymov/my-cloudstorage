@@ -28,9 +28,10 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req ->
                         req
-                                .requestMatchers("/").permitAll()
+                                .requestMatchers("/", "/css/**", "/js/**").permitAll()
                                 .anyRequest().authenticated())
                 .formLogin(Customizer.withDefaults())
+                .logout(Customizer.withDefaults())
                 .authenticationProvider(authProvider());
 
         return http.build();
