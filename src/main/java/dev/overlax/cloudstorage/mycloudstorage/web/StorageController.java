@@ -22,14 +22,19 @@ public class StorageController {
     private final FileService fileService;
 
     @GetMapping
-    public String storage(Model model, @AuthenticationPrincipal SecurityUser securityUser) {
-        System.out.println(securityUser.getUsername());
+    public String storage(Model model, @AuthenticationPrincipal SecurityUser user) {
+
+        fileService.getFilesList(user.getUsername()).forEach(System.out::println);
+
         return "index";
     }
 
     @PostMapping
-    public String upload(Model model, @RequestParam("file") MultipartFile file) throws FileUploadException {
-        fileService.upload(file);
+    public String upload(Model model,
+                         @RequestParam("file") MultipartFile file,
+                         @AuthenticationPrincipal SecurityUser user) throws FileUploadException {
+
+        fileService.upload(file, user.getUsername());
         model.addAttribute("file", file.getOriginalFilename());
         return "index";
     }

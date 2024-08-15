@@ -1,11 +1,9 @@
 package dev.overlax.cloudstorage.mycloudstorage.service;
 
 import dev.overlax.cloudstorage.mycloudstorage.configuration.MinioProperty;
-import io.minio.BucketExistsArgs;
-import io.minio.MakeBucketArgs;
-import io.minio.MinioClient;
-import io.minio.PutObjectArgs;
+import io.minio.*;
 import io.minio.errors.*;
+import io.minio.messages.Item;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +19,7 @@ public class MinioStorage implements Storage {
 
     private final MinioClient client;
     private final MinioProperty property;
+    private final MinioClient minioClient;
 
 
     @Override
@@ -58,5 +57,14 @@ public class MinioStorage implements Storage {
 
     @Override
     public void delete(String bucket, String filename) throws Exception {
+    }
+
+    public Iterable<Result<Item>> getObjectsInfo(String username) {
+        return minioClient.listObjects(
+                ListObjectsArgs.builder()
+                        .bucket(property.getBucket())
+                        .prefix(username + "/")
+                        .build()
+        );
     }
 }
