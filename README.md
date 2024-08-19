@@ -12,8 +12,9 @@ First of all, you need to run all secondary services:
 ```shell
 docker compose --env-file dev.env -f docker-compose-dev.yml up -d
 ```
+> [!NOTE]
+> As you can see all variables are taken from the **dev.env** file, so feel free to modify them as needed before executing the previous command.
 
-As you can see all variables are given from the **dev.env** file, so be free to change it as you need before executing the previous command.
 
 Then you can start the application with active profile **dev**:
 
@@ -23,36 +24,11 @@ mvn spring-boot:run -DskipTests -Dspring-boot.run.profiles=dev
 
 ## Production deployment
 
-Using the **dev.env** file as a template, create your **.env** file and fill it with your variables and secrets.
-Now, you can start docker-compose:
+> [!IMPORTANT]
+> Using the **dev.env** file as a template, create your own **.env** file and fill it with your variables and secrets.
+
+Now, you can start Docker Compose:
 
 ```shell
 docker compose up -d
 ```
-
-
-> [!NOTE] Warning
-> One line of body copy
-> Another line of body copy
-
-> [!tip]- MEGA TIP
-> super mega tip
-
-> [!Warning] warn
-> warning!!!
-
-> [!NOTE]
-> Useful information that users should know, even when skimming content.  
-> asd
-
-> [!TIP]
-> Helpful advice for doing things better or more easily.
-
-> [!IMPORTANT]
-> Key information users need to know to achieve their goal.
-
-> [!WARNING]
-> Urgent info that needs immediate user attention to avoid problems.
-
-> [!CAUTION]
-> Advises about risks or negative outcomes of certain actions.
