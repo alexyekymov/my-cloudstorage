@@ -49,14 +49,14 @@ public class MinioStorage implements Storage {
         }
     }
 
+    @Override
+    public void delete(String bucket, String filename) throws Exception {
+    }
+
     private boolean checkBucketExists(String property) throws ErrorResponseException, InsufficientDataException, InternalException, InvalidKeyException, InvalidResponseException, IOException, NoSuchAlgorithmException, ServerException, XmlParserException {
         return client.bucketExists(BucketExistsArgs.builder()
                 .bucket(property)
                 .build());
-    }
-
-    @Override
-    public void delete(String bucket, String filename) throws Exception {
     }
 
     public Iterable<Result<Item>> getObjectsInfo(String username) {

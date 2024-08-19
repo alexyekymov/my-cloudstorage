@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -60,5 +61,16 @@ public class FileService {
         }
 
         return fileNames;
+    }
+
+    public String addFolder(String username, String folderName) {
+        String path = username + "/" + folderName + "/";
+        try {
+            minioStorage.save(new ByteArrayInputStream(new byte[]{}), path);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return path;
     }
 }
