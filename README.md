@@ -29,3 +29,14 @@ Now, you can start docker-compose:
 ```shell
 docker compose up -d
 ```
+
+
+> [!NOTE] Warning
+> One line of body copy
+> Another line of body copy
+
+> [!tip]- MEGA TIP
+> super mega tip
+
+> [!Warning] warn
+> warning!!!
