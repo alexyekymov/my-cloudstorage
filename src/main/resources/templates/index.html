@@ -4,18 +4,30 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/main.css">
+
 </head>
 <body>
-<form th:method="POST" th:action="@{/storage}" enctype="multipart/form-data">
-<div class="drop-zone">
-    <span class="drop-zone__prompt">Drop file here or click to upload</span>
-    <input type="file" name="file" accept="multipart/form-data" class="drop-zone__input">
+<div class="container">
+    <form th:method="POST" th:action="@{/storage}" enctype="multipart/form-data">
+        <div class="drop-zone">
+            <span class="drop-zone__prompt">Drop file here or click to upload</span>
+            <input type="file" name="file" accept="multipart/form-data" class="drop-zone__input">
+        </div>
+        <input type="submit"/>
+    </form>
+    <br><br>
+    <div class="col-6">
+        <form th:method="POST" th:action="@{/storage/new}">
+            <label for="newFolder"></label>
+            <input type="text" th:name="folderName" id="newFolder">
+            <input type="submit">
+        </form>
+    </div>
 </div>
-<input type="submit"/>
-</form>
-
 
 <script src="/js/main.js"></script>
+<script src="/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
