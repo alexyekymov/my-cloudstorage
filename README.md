@@ -15,6 +15,12 @@ docker compose --env-file dev.env -f docker-compose-dev.yml up -d
 
 As you can see all variables are given from the **dev.env** file, so be free to change it as you need before executing the previous command.
 
+Then you can start the application with active profile **dev**:
+
+```shell
+mvn spring-boot:run -DskipTests -Dspring-boot.run.profiles=dev
+```
+
 ## Production deployment
 
 Using the **dev.env** file as a template, create your **.env** file and fill it with your variables and secrets.
