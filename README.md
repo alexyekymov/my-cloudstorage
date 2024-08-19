@@ -42,7 +42,7 @@ docker compose up -d
 > warning!!!
 
 > [!NOTE]
-> Useful information that users should know, even when skimming content.
+> Useful information that users should know, even when skimming content.  
 > asd
 
 > [!TIP]
