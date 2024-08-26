@@ -1,8 +1,5 @@
-# What is cloud-storage
+# Cloud-storage
 
-----
-
-***Cloud-storage*** is a pet project where I practiced some technologies
 
 
 ## Local development
