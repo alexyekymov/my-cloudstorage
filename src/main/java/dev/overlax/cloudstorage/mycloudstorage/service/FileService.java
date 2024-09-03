@@ -45,7 +45,7 @@ public class FileService {
         return filename;
     }
 
-    public List<String> getFilesList(String username) {
+    public List<String> getFileNamesList(String username) {
 
         Iterable<Result<Item>> objectsInfo = minioStorage.getObjectsInfo(username);
 
@@ -54,7 +54,7 @@ public class FileService {
         for (Result<Item> objectInfo : objectsInfo) {
             try {
                 var item = objectInfo.get();
-                fileNames.add(item.objectName());
+                fileNames.add(item.objectName().substring(username.length() + 1));
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -64,13 +64,16 @@ public class FileService {
     }
 
     public String addFolder(String username, String folderName) {
-        String path = username + "/" + folderName + "/";
+        StringBuilder path = new StringBuilder(username)
+                .append("/")
+                .append(folderName)
+                .append("/");
         try {
-            minioStorage.save(new ByteArrayInputStream(new byte[]{}), path);
+            minioStorage.save(new ByteArrayInputStream(new byte[]{}), path.toString());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
-        return path;
+        return path.toString();
     }
 }

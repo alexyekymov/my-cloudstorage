@@ -17,7 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 @Controller
-@RequestMapping("/storage")
+@RequestMapping("/")
 @RequiredArgsConstructor(onConstructor_ = {@Autowired})
 public class StorageController {
 
@@ -26,7 +26,7 @@ public class StorageController {
     @GetMapping
     public String storage(Model model, @AuthenticationPrincipal SecurityUser user) {
 
-        List<String> files = fileService.getFilesList(user.getUsername());
+        List<String> files = fileService.getFileNamesList(user.getUsername());
         model.addAttribute("files", files);
 
         return "index";
@@ -39,7 +39,7 @@ public class StorageController {
 
         fileService.upload(file, user.getUsername());
         model.addAttribute("file", file.getOriginalFilename());
-        return "index";
+        return "redirect:/";
     }
 
     @PostMapping("/new")
@@ -49,6 +49,6 @@ public class StorageController {
 
         fileService.addFolder(user.getUsername(), folderName);
 
-        return "redirect:/storage";
+        return "redirect:/";
     }
 }
