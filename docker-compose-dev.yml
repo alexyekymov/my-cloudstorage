@@ -11,7 +11,7 @@ services:
       - POSTGRES_USER=${DB_USERNAME}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
     volumes:
-      - psql-cloud-data:/var/lib/postgresql/data
+      - cloud-psql-data:/var/lib/postgresql/data
       - ./src/main/resources/db/init:/docker-entrypoint-initdb.d:ro
 
   minio:
@@ -26,7 +26,7 @@ services:
       - '9090:9090'
       - '9000:9000'
     volumes:
-      - ${HOME}/minio-cloud/data:/data
+      - cloud-minio-data:/data
 
   redis:
     image: redis/redis-stack-server:7.2.0-v11
@@ -36,4 +36,5 @@ services:
       - '6379:6379'
 
 volumes:
-  psql-cloud-data:
+  cloud-psql-data:
+  cloud-minio-data:
