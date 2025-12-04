@@ -59,7 +59,8 @@ public class MinioStorage implements Storage {
                 .build());
     }
 
-    public Iterable<Result<Item>> getObjectsInfo(String username) {
+    public Iterable<Result<Item>> getObjectsInfo(String username) throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
+        createBucket();
         return minioClient.listObjects(
                 ListObjectsArgs.builder()
                         .bucket(property.getBucket())
