@@ -4,7 +4,7 @@ services:
     image: postgres:16.3
     container_name: psql-cloud
     ports:
-      - '5432:5432'
+      - '55555:5432'
     environment:
       - POSTGRES_DB=${DB_DATABASE}
       - POSTGRES_USER=${DB_USERNAME}
