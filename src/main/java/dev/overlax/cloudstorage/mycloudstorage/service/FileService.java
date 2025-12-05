@@ -1,6 +1,7 @@
 package dev.overlax.cloudstorage.mycloudstorage.service;
 
 import io.minio.Result;
+import io.minio.errors.*;
 import io.minio.messages.Item;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,7 +11,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,7 +49,7 @@ public class FileService {
         return filename;
     }
 
-    public List<String> getFileNamesList(String username) {
+    public List<String> getFileNamesList(String username) throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
 
         Iterable<Result<Item>> objectsInfo = minioStorage.getObjectsInfo(username);
 
@@ -75,5 +79,13 @@ public class FileService {
         }
 
         return path.toString();
+    }
+
+    public void deleteFile(String username, String filename) {
+        try {
+            minioStorage.delete(username, filename);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

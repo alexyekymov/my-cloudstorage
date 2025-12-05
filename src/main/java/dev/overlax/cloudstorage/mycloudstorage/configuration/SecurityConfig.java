@@ -1,8 +1,10 @@
 package dev.overlax.cloudstorage.mycloudstorage.configuration;
 
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -10,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.filter.HiddenHttpMethodFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -44,4 +47,12 @@ public class SecurityConfig {
 
         return authProvider;
     }
+
+    @Bean
+    public FilterRegistrationBean<HiddenHttpMethodFilter> hiddenHttpMethodFilter(){
+        FilterRegistrationBean<HiddenHttpMethodFilter> frb = new FilterRegistrationBean<>(new HiddenHttpMethodFilter());
+        frb.setOrder(Ordered.HIGHEST_PRECEDENCE);
+        return frb;
+    }
+
 }

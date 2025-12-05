@@ -19,7 +19,6 @@ public class MinioStorage implements Storage {
 
     private final MinioClient client;
     private final MinioProperty property;
-    private final MinioClient minioClient;
 
 
     @Override
@@ -50,18 +49,27 @@ public class MinioStorage implements Storage {
     }
 
     @Override
-    public void delete(String bucket, String filename) throws Exception {
+    public void delete(String username, String filename) throws Exception {
+        StringBuilder path = new StringBuilder();
+        if (username != null && filename != null) {
+            path.append(username).append("/").append(filename);
+        }
+
+        client.removeObject(RemoveObjectArgs.builder()
+                .bucket(property.getBucket())
+                .object(path.toString())
+                .build());
     }
 
-    private boolean checkBucketExists(String property) throws ErrorResponseException, InsufficientDataException, InternalException, InvalidKeyException, InvalidResponseException, IOException, NoSuchAlgorithmException, ServerException, XmlParserException {
+    private boolean checkBucketExists(String bucket) throws ErrorResponseException, InsufficientDataException, InternalException, InvalidKeyException, InvalidResponseException, IOException, NoSuchAlgorithmException, ServerException, XmlParserException {
         return client.bucketExists(BucketExistsArgs.builder()
-                .bucket(property)
+                .bucket(bucket)
                 .build());
     }
 
     public Iterable<Result<Item>> getObjectsInfo(String username) throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
         createBucket();
-        return minioClient.listObjects(
+        return client.listObjects(
                 ListObjectsArgs.builder()
                         .bucket(property.getBucket())
                         .prefix(username + "/")

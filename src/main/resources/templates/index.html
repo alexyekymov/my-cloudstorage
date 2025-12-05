@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -35,11 +36,16 @@
             <ul id="filesList" class="list-group">
                 <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
                     <div sec:authentication="name"></div>
-                    <div >
+                    <div sec:authorize="hasRole('ROLE_USER')"> asdas</div>
+
+                    <div>
                         <form th:method="POST" th:action="@{/new}">
                             <label for="newFolder"></label>
-                            <input type="text" th:name="folderName" id="newFolder">
-                            <button type="submit" class="btn btn-outline-secondary btn-sm">+ folder</button>
+                            <div class="input-group input-group-sm">
+                                <input type="text" th:name="folderName" id="newFolder"
+                                       class="form-control rounded-start">
+                                <button type="submit" class="btn btn-outline-secondary btn-sm">+ folder</button>
+                            </div>
                         </form>
                     </div>
 
@@ -47,8 +53,12 @@
                 <li th:each="file : ${files}"
                     class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
                     <a href="" th:text="${file}"></a>
-                    <button class="btn btn-outline-primary btn-sm">Delete</button>
-                    <button class="btn btn-outline-danger btn-sm">Delete</button>
+                    <div class="flex justify-content-end">
+                        <button class="btn btn-outline-primary btn-sm">Delete</button>
+                        <form th:method="DELETE" th:action="@{/{filename}(filename=${file})}">
+                            <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
+                        </form>
+                    </div>
                 </li>
             </ul>
         </div>

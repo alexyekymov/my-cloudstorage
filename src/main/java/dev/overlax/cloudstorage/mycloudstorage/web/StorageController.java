@@ -2,18 +2,19 @@ package dev.overlax.cloudstorage.mycloudstorage.web;
 
 import dev.overlax.cloudstorage.mycloudstorage.model.SecurityUser;
 import dev.overlax.cloudstorage.mycloudstorage.service.FileService;
+import io.minio.errors.*;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 @Controller
@@ -24,7 +25,7 @@ public class StorageController {
     private final FileService fileService;
 
     @GetMapping
-    public String storage(Model model, @AuthenticationPrincipal SecurityUser user) {
+    public String storage(Model model, @AuthenticationPrincipal SecurityUser user) throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
 
         List<String> files = fileService.getFileNamesList(user.getUsername());
         model.addAttribute("files", files);
@@ -37,8 +38,11 @@ public class StorageController {
                          @RequestParam("file") MultipartFile file,
                          @AuthenticationPrincipal SecurityUser user) throws FileUploadException {
 
-        fileService.upload(file, user.getUsername());
-        model.addAttribute("file", file.getOriginalFilename());
+        if (!file.isEmpty()) {
+            fileService.upload(file, user.getUsername());
+            model.addAttribute("file", file.getOriginalFilename());
+        }
+
         return "redirect:/";
     }
 
@@ -47,8 +51,18 @@ public class StorageController {
                             @RequestParam("folderName") String folderName,
                             @AuthenticationPrincipal SecurityUser user) {
 
-        fileService.addFolder(user.getUsername(), folderName);
+        if (!folderName.isEmpty()) {
+            fileService.addFolder(user.getUsername(), folderName);
+        }
 
+        return "redirect:/";
+    }
+
+    @DeleteMapping("/{filename}")
+    public String delete(@PathVariable String filename,
+                         @AuthenticationPrincipal SecurityUser user) {
+
+        fileService.deleteFile(user.getUsername(), filename);
         return "redirect:/";
     }
 }
