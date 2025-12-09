@@ -12,5 +12,4 @@ public interface Storage {
 
     void delete(String bucket, String filename) throws Exception;
 
-
 }

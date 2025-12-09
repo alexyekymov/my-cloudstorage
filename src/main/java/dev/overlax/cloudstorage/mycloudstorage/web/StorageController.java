@@ -58,8 +58,8 @@ public class StorageController {
         return "redirect:/";
     }
 
-    @DeleteMapping("/{filename}")
-    public String delete(@PathVariable String filename,
+    @DeleteMapping
+    public String delete(@RequestParam String filename,
                          @AuthenticationPrincipal SecurityUser user) {
 
         fileService.deleteFile(user.getUsername(), filename);
